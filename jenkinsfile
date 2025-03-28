@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven "Maven"
+    }
     stages {
         stage("git-Checkout") {
             steps {
@@ -9,17 +12,21 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building"
+                sh 'mvn clean package'
             }
         }
         stage("Test") {
             steps {
                 echo "Testing"
+                sh 'mvn test'
             }
         }
-        stage("Deploy") {
-            steps {
-                echo "Deploying"
-            }
-        }
+        // stage("Run JAR") {
+        //     steps {
+        //         scripts {
+        //             def output = sh(script: 'java -jar target/simple-java-project-1.0-SNAPSHOT.jar')
+        //         }
+        //     }
+        // }
     }
 }
