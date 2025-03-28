@@ -14,14 +14,14 @@ pipeline {
             steps {
                 echo 'Building'
                 
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing'
 
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
         stage('Run JAR') {
