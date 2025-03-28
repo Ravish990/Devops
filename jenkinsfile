@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'maven' 
+        maven 'maven'
     }
     stages {
         stage('Git Checkout') {
@@ -13,37 +13,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
-                
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing'
-
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
         stage('Run JAR') {
             steps {
                 script {
                     echo 'Running the JAR file'
-                    
-                    def output = sh(script: 'java -jar target/simple-java-project-1.0-SNAPSHOT.jar', returnStdout: true).trim()
+                    def output = bat(script: 'java -jar target/simple-java-project-1.0-SNAPSHOT.jar', returnStdout: true).trim()
                     echo "Output from JAR: ${output}"
                 }
             }
-        }
-    }
-    post {
-        always {
-            echo 'Pipeline execution completed!'
-        }
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed. Check logs for details.'
         }
     }
 }
